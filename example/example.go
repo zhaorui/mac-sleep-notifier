@@ -3,23 +3,23 @@ package main
 import (
 	"log"
 
-	"github.com/prashantgupta24/mac-sleep-notifier/notifier"
+	"github.com/zhaorui/mac-sleep-notifier/notifier"
 )
 
 func main() {
 	log.Printf("starting sleep notifier ...")
 	notifierCh := notifier.GetInstance().Start()
 
-	for {
-		select {
-		case activity := <-notifierCh:
-			if activity.Type == notifier.Awake {
-				log.Println("machine awake")
-			} else {
-				if activity.Type == notifier.Sleep {
-					log.Println("machine sleeping")
-				}
-			}
+	for activity := range notifierCh {
+		switch activity.Type {
+		case notifier.WillAwake:
+			log.Println("machine will awake")
+		case notifier.Awake:
+			log.Println("machine awake")
+		case notifier.Sleep:
+			log.Println("machine sleeping")
+		default:
+			log.Printf("unknown activity type: %v", activity.Type)
 		}
 	}
 }

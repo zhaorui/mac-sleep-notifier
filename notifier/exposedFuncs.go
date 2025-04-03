@@ -1,30 +1,30 @@
 package notifier
 
-import (
-	"C"
-	"time"
-)
+import "C"
 
 //export CanSleep
 func CanSleep() C.int {
-	time.Sleep(5 * time.Second)
+	// always allow sleep
 	return 1
 }
 
 //export WillWake
 func WillWake() {
-	//time.Sleep(5 * time.Second)
+	notifierCh <- &Activity{
+		Type: WillAwake,
+	}
+}
+
+//export HasWake
+func HasWake() {
 	notifierCh <- &Activity{
 		Type: Awake,
 	}
-	//log.Printf("Will Wake")
 }
 
 //export WillSleep
 func WillSleep() {
-	//time.Sleep(5 * time.Second)
 	notifierCh <- &Activity{
 		Type: Sleep,
 	}
-	//log.Printf("Will Sleep")
 }

@@ -4,15 +4,16 @@ package notifier
 // int CanSleep();
 // void WillWake();
 // void WillSleep();
+// void HasWake();
 // #include "main.h"
 import "C"
 
-//StartNotifier starts the internal notifier function which communicates with the C library.
+// StartNotifier starts the internal notifier function which communicates with the C library.
 func StartNotifier() {
 	C.registerNotifications()
 }
 
-//StopNotifier stops the internal notifier function which communicates with the C library.
+// StopNotifier stops the internal notifier function which communicates with the C library.
 func StopNotifier() {
 	C.unregisterNotifications()
 }

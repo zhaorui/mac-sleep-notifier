@@ -16,7 +16,7 @@ func TestSuite(t *testing.T) {
 	suite.Run(t, new(TestNotifier))
 }
 
-//Run once before each test
+// Run once before each test
 func (suite *TestNotifier) SetupTest() {
 	instance = nil
 }
@@ -48,6 +48,7 @@ func (suite *TestNotifier) TestStartAndStop() {
 	notifierInstance := GetInstance()
 	notifierInstance.Start()
 
+	time.Sleep(time.Second) //wait for start
 	assert.True(t, notifierInstance.isStatusRunning(), "notifier should be running after start")
 
 	notifierInstance.Quit()

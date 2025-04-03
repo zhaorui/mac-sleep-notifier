@@ -26,13 +26,12 @@ void MySleepCallBack(void *refCon, io_service_t service, natural_t messageType, 
     switch (messageType)
     {
     case kIOMessageCanSystemSleep:
-        if (CanSleep())
-        {
-            //printf("can sleep");
+        printf("can sleep?");
+        if (CanSleep()) {
+            printf("allow sleep");
             IOAllowPowerChange(root_port, (long)messageArgument);
-        }
-        else
-        {
+        } else {
+            printf("veto sleep");
             IOCancelPowerChange(root_port, (long)messageArgument);
         }
         break;
@@ -46,6 +45,7 @@ void MySleepCallBack(void *refCon, io_service_t service, natural_t messageType, 
         //printf("powering on");
         break;
     case kIOMessageSystemHasPoweredOn:
+        HasWake();
         break;
     default:
         break;
